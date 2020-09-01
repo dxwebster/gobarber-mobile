@@ -24,10 +24,13 @@
 - React Navigation: `yarn add @react-navigation/native`
 - Outros itens do React Navigations: `yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
 - Navegação em Pilhas: `yarn add @react-navigation/stack`
+- Icones: `yarn add react-native-vector-icons`
 
 Dependências de desenvolvimento:
 
 - Tipos do Styled-Components: `yarn add @types/styled-components -D`
+
+- Tipos do Icons: `yarn add @types/react-native-vector-icons -D`
 
 ## Configuração de StatusBar
 
@@ -104,29 +107,6 @@ O React Stack Navigator, cria um header automático, quando utilizado. Esse head
   >
 ```
 
-## Importando imagens
-
-Na nossa página 'Signin', vamos importar o logo pelo component 'Image' do React-Native. Basta incluí-lo dentro do 'Container'.
-
-```tsx
-import React from 'react';
-import { Image } from 'react-native';
-
-import { Container } from './styles';
-
-import logoImg from '../../assets/logo.png';
-
-const Signin: React.FC = () => {
-  return (
-    <Container>
-      <Image source={logoImg} />
-    </Container>
-  );
-};
-
-export default Signin;
-```
-
 ## Adicionando fontes
 
 Vamos criar uma outra pasta assets, mas na raíz da aplicação para colocar as fontes. Vamos criar um arquivo 'react-native.config.js' e colocar as configurações dessas assets para o projeto:
@@ -162,4 +142,106 @@ export const Title = styled.Text`
   font-family: 'RobotoSlab-Medium';
   margin: 64px 0 24px;
 `;
+```
+
+Também não precisamos incluir o display:flex nos projetos React Native, pois todos os elementos já vem assim por padrão.
+
+## Component Input e Button
+
+Como o input se repete ao lono da aplicação, vamos criar um component só pra ele. Vamos utilizar o TextInputProps do react-native para extender as propriedades padrão de um input do HTML e poder criar nossas próprias propriedades.
+
+Nosso input precisará ter um name e um icon. Vamos criar uma interface para setar os tipos e depois incluí-las no nosso component, junto com o resto (...rest) de propriedades padrão.
+
+```tsx
+import React from 'react';
+import { TextInputProps } from 'react-native';
+
+import { Container, TextInput, Icon } from './styles';
+
+interface InputProps extends TextInputProps {
+  name: string;
+  icon: string;
+}
+
+const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => (
+  <Container>
+    <Icon name={icon} size={20} color="#666360" />
+    <TextInput placeholderTextColor="#666360" {...rest} />
+  </Container>
+);
+
+export default Input;
+```
+
+Nos estilos, vamos usar uma biblioteca de icones, 'react-native-vector-icons/Feather' para incluir os ícones no input. Para isso, precisamos fazer algumas configurações num arquivo do projeto. Acessar android > app > build.gradle e incluir o código abaixo:
+
+```ts
+project.ext.vectoricons =[
+    iconsFontNames: ['Feather.ttf']
+]
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+```
+
+Rodar o yarn android de novamente para fazer a instalação dos ícones.
+
+Agora, nos nossos estilos do component Input, como estamos utilizando essa biblioteca externa, criaremos o styled-component do icon colocando a biblioteca entre parêntesis:
+
+```ts
+export const Icon = styled(FeatherIcon)`
+  margin-right: 16px;
+`;
+```
+
+O component Button, segue a mesma lógica do Input, vamos utilizar umma biblioteca do React Native para extender as propriedades padrão do botão HTML para incluir o conteúdo do botão, no caso o 'children'.
+
+```tsx
+import React from 'react';
+import { RectButtonProperties } from 'react-native-gesture-handler';
+
+import { Container, ButtonText } from './styles';
+
+interface ButtonProps extends RectButtonProperties {
+  children: string;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
+  <Container {...rest}>
+    <ButtonText>{children}</ButtonText>
+  </Container>
+);
+
+export default Button;
+```
+
+## Página: Signin
+
+Com nossos dois components criados, vamos importa-los e incluí-los na página de Signin, passando para cada um suas respectivas propriedades já setadas:
+
+```tsx
+import React from 'react';
+import { Image } from 'react-native';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+
+import logoImg from '../../assets/logo.png';
+
+import { Container, Title } from './styles';
+
+const Signin: React.FC = () => {
+  return (
+    <Container>
+      <Image source={logoImg} />
+      <Title>Faça seu logon</Title>
+
+      <Input name="email" icon="mail" placeholder="Email" />
+      <Input name="password" icon="lock" placeholder="Senha" />
+
+      <Button onPress={() => {}}>Entrar</Button>
+    </Container>
+  );
+};
+
+export default Signin;
 ```
