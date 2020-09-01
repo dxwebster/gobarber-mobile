@@ -106,7 +106,7 @@ O React Stack Navigator, cria um header automático, quando utilizado. Esse head
 
 ## Importando imagens
 
-Na nossa página 'Signin', vamos importar o logo pelo commponent 'Image' do React-Native. Basta incluí-lo dentro do 'Container'.
+Na nossa página 'Signin', vamos importar o logo pelo component 'Image' do React-Native. Basta incluí-lo dentro do 'Container'.
 
 ```tsx
 import React from 'react';
@@ -129,7 +129,7 @@ export default Signin;
 
 ## Adicionando fontes
 
-Vamos criar uma outra pasta assets, mas na raíz da aplicação para colocar as fontes. Vamos criar um arquivo 'react-native'config.js' e colocar as configurações dessas assets para o projeto:
+Vamos criar uma outra pasta assets, mas na raíz da aplicação para colocar as fontes. Vamos criar um arquivo 'react-native.config.js' e colocar as configurações dessas assets para o projeto:
 
 ```js
 module.exports = {
