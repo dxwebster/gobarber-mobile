@@ -7,6 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -23,6 +24,8 @@ import {
 } from './styles';
 
 const Signin: React.FC = () => {
+  const Navigation = useNavigation();
+
   return (
     <>
       <KeyboardAvoidingView
@@ -51,7 +54,7 @@ const Signin: React.FC = () => {
             </ForgotPassword>
           </Container>
 
-          <CeateAccountButton onPress={() => {}}>
+          <CeateAccountButton onPress={() => Navigation.navigate('SignUp')}>
             <Icon name="log-in" size={20} color="#ff9000" />
             <CeateAccountButtonText>Criar uma conta</CeateAccountButtonText>
           </CeateAccountButton>
