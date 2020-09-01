@@ -12,11 +12,10 @@
 - Create new project with typescript template: `npx react-native init <MyApp> --template react-native-template-typescript`
 - Run the app on Android studio: `yarn android`
 
-### Limpar template
+### Limpar template e configurações
 
 - Remover prettier e eslint files
-- Mover o App.tsx pra uma pasta 'src'
-- Excluir conteúdo e iniciar uma View no App.tsx
+- Mover o App.tsx pra uma pasta 'src', excluir conteúdo e iniciar uma View
 - Ajeitar o caminho do App no arquivo 'index.js'
 
 ## Bibliotecas
