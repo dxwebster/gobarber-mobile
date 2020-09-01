@@ -25,6 +25,7 @@
 - Outros itens do React Navigations: `yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
 - Navegação em Pilhas: `yarn add @react-navigation/stack`
 - Icones: `yarn add react-native-vector-icons`
+- Lidar com Iphone: `yarn add react-native-iphone-x-helper`
 
 Dependências de desenvolvimento:
 
@@ -151,6 +152,8 @@ Também não precisamos incluir o display:flex nos projetos React Native, pois t
 Como o input se repete ao lono da aplicação, vamos criar um component só pra ele. Vamos utilizar o TextInputProps do react-native para extender as propriedades padrão de um input do HTML e poder criar nossas próprias propriedades.
 
 Nosso input precisará ter um name e um icon. Vamos criar uma interface para setar os tipos e depois incluí-las no nosso component, junto com o resto (...rest) de propriedades padrão.
+
+Lembrando que todas os textos da aplicação precisam ter uma tag de texto em volta.
 
 ```tsx
 import React from 'react';
