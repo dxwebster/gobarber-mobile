@@ -6,7 +6,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 0 30px ${Platform.OS === 'android' ? 90 : 40}px;
+  padding: 0 30px ${Platform.OS === 'android' ? 120 : 40}px;
 `;
 
 export const Title = styled.Text`
@@ -26,7 +26,7 @@ export const ForgotPasswordText = styled.Text`
   font-family: 'RobotoSlab-Regular';
 `;
 
-export const CeateAccountButton = styled.TouchableOpacity`
+export const CreateAccountButton = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -41,7 +41,7 @@ export const CeateAccountButton = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const CeateAccountButtonText = styled.Text`
+export const CreateAccountButtonText = styled.Text`
   color: #ff9000;
   font-size: 18px;
   font-family: 'RobotoSlab-Regular';

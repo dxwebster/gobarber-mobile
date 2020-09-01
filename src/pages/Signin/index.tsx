@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   Image,
   View,
@@ -6,8 +6,12 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -19,12 +23,17 @@ import {
   Title,
   ForgotPassword,
   ForgotPasswordText,
-  CeateAccountButton,
-  CeateAccountButtonText,
+  CreateAccountButton,
+  CreateAccountButtonText,
 } from './styles';
 
-const Signin: React.FC = () => {
-  const Navigation = useNavigation();
+const SignIn: React.FC = () => {
+  const navigation = useNavigation();
+
+  const formRef = useRef<FormHandles>(null);
+  const handledSignIn = useCallback((data: object) => {
+    console.log(data);
+  }, []);
 
   return (
     <>
@@ -44,24 +53,32 @@ const Signin: React.FC = () => {
               <Title>Faça seu logon</Title>
             </View>
 
-            <Input name="email" icon="mail" placeholder="Email" />
-            <Input name="password" icon="lock" placeholder="Senha" />
+            <Form ref={formRef} onSubmit={handledSignIn}>
+              <Input name="email" icon="mail" placeholder="Email" />
+              <Input name="password" icon="lock" placeholder="Senha" />
 
-            <Button onPress={() => {}}>Entrar</Button>
+              <Button
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}
+              >
+                Entrar
+              </Button>
+            </Form>
 
-            <ForgotPassword>
+            <ForgotPassword onPress={() => {}}>
               <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
             </ForgotPassword>
           </Container>
-
-          <CeateAccountButton onPress={() => Navigation.navigate('SignUp')}>
-            <Icon name="log-in" size={20} color="#ff9000" />
-            <CeateAccountButtonText>Criar uma conta</CeateAccountButtonText>
-          </CeateAccountButton>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
+        <Icon name="log-in" size={20} color="#ff9000" />
+        <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
+      </CreateAccountButton>
     </>
   );
 };
 
-export default Signin;
+export default SignIn;
