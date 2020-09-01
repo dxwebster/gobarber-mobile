@@ -1,10 +1,16 @@
-Remove legacy react-native-cli: `npm uninstall -g react-native-cli`
+## Executar no seu computador
 
-Install new thing: `npm i -g @react-native-community/cli`
+- Clonar Repositório: `git clone https://github.com/dxwebster/GoBarber-Mobile`
+- Ir para projeto: `cd GoBarber-Mobile`
+- Instalar dependências: `yarn install`
+- Rodar app no Android Studio: `yarn android`
 
-Create new project with typescript template: `npx react-native init <MyApp> --template react-native-template-typescript`
+## Criar esse projeto do zero
 
-Run the app on Android studio: `yarn android`
+- Remove legacy react-native-cli: `npm uninstall -g react-native-cli`
+- Install new thing: `npm i -g @react-native-community/cli`
+- Create new project with typescript template: `npx react-native init <MyApp> --template react-native-template-typescript`
+- Run the app on Android studio: `yarn android`
 
 ### Limpar template
 
@@ -15,15 +21,15 @@ Run the app on Android studio: `yarn android`
 
 ## Bibliotecas
 
-Styled-Components: `yarn add styled-components`
-React Navigation: `yarn add @react-navigation/native`
-`yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
+- Styled-Components: `yarn add styled-components`
+- React Navigation: `yarn add @react-navigation/native`
+  `yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
 
-Navegação em Pilhas: `yarn add @react-navigation/stack`
+- Navegação em Pilhas: `yarn add @react-navigation/stack`
 
-- Dependências de desenvolvimento:
+Dependências de desenvolvimento:
 
-Tipos do Styled-Components: `yarn add @types/styled-components -D`
+- Tipos do Styled-Components: `yarn add @types/styled-components -D`
 
 ## Configuração de StatusBar
 
