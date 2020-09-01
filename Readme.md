@@ -12,7 +12,7 @@
 - Create new project with typescript template: `npx react-native init <MyApp> --template react-native-template-typescript`
 - Run the app on Android studio: `yarn android`
 
-### Limpar template e configurações
+## Limpar template e configurações
 
 - Remover prettier e eslint files
 - Mover o App.tsx pra uma pasta 'src', excluir conteúdo e iniciar uma View
@@ -47,7 +47,7 @@ const App: React.FC = () => (
 export default App;
 ```
 
-### React Navigation e Rotas
+## React Navigation e Rotas
 
 Com o React Navigation lidamos com as nossas rotas. O contexto nesse caso é outro component, o 'NavigationContainer' que precisa ficar em volta de todos os componentes.
 
@@ -104,7 +104,7 @@ O React Stack Navigator, cria um header automático, quando utilizado. Esse head
   >
 ```
 
-### Importando imagens
+## Importando imagens
 
 Na nossa página 'Signin', vamos importar o logo pelo commponent 'Image' do React-Native. Basta incluí-lo dentro do 'Container'.
 
@@ -127,7 +127,7 @@ const Signin: React.FC = () => {
 export default Signin;
 ```
 
-### Adicionando fontes
+## Adicionando fontes
 
 Vamos criar uma outra pasta assets, mas na raíz da aplicação para colocar as fontes. Vamos criar um arquivo 'react-native'config.js' e colocar as configurações dessas assets para o projeto:
 
@@ -143,7 +143,7 @@ module.exports = {
 
 E rodar o comando: `yarn react-native link`
 
-### Primeiras estilizações
+## Primeiras estilizações
 
 Precisamos lembrar que no React Native não temos encadeamento e herança de estilos, cada elemento terá sua própria estilização.
 
