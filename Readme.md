@@ -22,8 +22,7 @@
 
 - Styled-Components: `yarn add styled-components`
 - React Navigation: `yarn add @react-navigation/native`
-  `yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
-
+- Outros itens do React Navigations: `yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view`
 - Navegação em Pilhas: `yarn add @react-navigation/stack`
 
 Dependências de desenvolvimento:
