@@ -12,7 +12,7 @@
 ---
 
 ## 🔖  Sobre
-Essa é o front-end da GoBarber, uma aplicação que permite o agendamento de serviços de cabeleireiros.
+Esse é o mobile da GoBarber, uma aplicação que permite o agendamento de serviços de cabeleireiros.
 
 ## 📥 Executar esse projeto no seu computador
 
