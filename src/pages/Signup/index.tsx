@@ -9,12 +9,13 @@ import {
   Alert,
 } from 'react-native';
 
+import api from '../../services/api';
+
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
-
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 
@@ -40,39 +41,48 @@ const SignUp: React.FC = () => {
 
   // callback para lidar com submit, recebe como parâmetro os dados do form
   //  Aqui vamos colocar a validação do form
-  const handleSignUp = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({}); // limpa os erros do input
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({}); // limpa os erros do input
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        email: Yup.string()
-          .required('Email obrigatório')
-          .email('Digite um email válido'),
-        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-      });
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um email válido'),
+          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // await api.post('/users', data);
-      // history.push('/');
-    } catch (err) {
-      // se o erro for gerado pelo Yupi, retorna o erro
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
+        Alert.alert(
+          'Cadastro realizado  com sucesso!',
+          'Você já pode fazer login na aplicação.'
+        );
 
-        return;
+        // Conexão com api
+        await api.post('/users', data);
+        navigation.goBack();
+      } catch (err) {
+        // se o erro for gerado pelo Yupi, retorna o erro
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+        // senão, vai disparar um alert do react-native
+        Alert.alert(
+          'Erro no cadastro',
+          'Ocorreu um erro ao fazer cadastro, tente novamente'
+        );
       }
-      // senão, vai disparar um alert do react-native
-      Alert.alert(
-        'Erro no cadastro',
-        'Ocorreu um  erro ao fazer cadastro, tente novamente'
-      );
-    }
-  }, []);
+    },
+    [navigation]
+  );
 
   return (
     <>
@@ -128,7 +138,7 @@ const SignUp: React.FC = () => {
               />
 
               <Button onPress={() => formRef.current?.submitForm()}>
-                Entrar
+                Criar
               </Button>
             </Form>
           </Container>

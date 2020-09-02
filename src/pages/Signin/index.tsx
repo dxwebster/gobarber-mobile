@@ -9,13 +9,15 @@ import {
   Alert,
 } from 'react-native';
 
+import { useAuth } from '../../hooks/AuthContext';
+
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-import * as Yup from 'yup';
-import getValidationErrors from '../../utils/getValidationErrors';
 
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -44,43 +46,46 @@ const SignIn: React.FC = () => {
   // Navegação
   const navigation = useNavigation();
 
+  const { signIn } = useAuth();
+
   // Função que dispara no submit
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('Email obrigatório')
-          .email('Digite um email válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um email válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // await signIn({
-      //   email: data.email,
-      //   password: data.password,
-      // });
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        // se o erro for gerado pelo Yupi, retorna o erro
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
 
-      // history.push('/dashboard');
-    } catch (err) {
-      // se o erro for gerado pelo Yupi, retorna o erro
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
-
-        return;
+          return;
+        }
+        // senão, vai disparar um alert do react-native
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um  erro ao fazer login, cheque as credenciais'
+        );
       }
-      // senão, vai disparar um alert do react-native
-      Alert.alert(
-        'Erro na autenticação',
-        'Ocorreu um  erro ao fazer login, cheque as credenciais'
-      );
-    }
-  }, []);
+    },
+    [signIn]
+  );
 
   // Retorno da página
   return (

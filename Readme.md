@@ -28,6 +28,8 @@
 - Lidar com Iphone: `yarn add react-native-iphone-x-helper`
 - Formulários: `yarn add @unform/core @unform/mobile`
 - Validação dos Forms: `yarn add yup`
+- Conexão com api: `yarn add axios`
+- Banco assíncrono pra salvar informações: `yarn add @react-native-community/async-storage`
 
 Dependências de desenvolvimento:
 
