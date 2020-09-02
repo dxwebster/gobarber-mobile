@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -28,13 +29,19 @@ import {
 } from './styles';
 
 const SignIn: React.FC = () => {
+  // Referências para acessar um objeto e manipulá-lo
+  const formRef = useRef<FormHandles>(null); // referência do formulário
+  const passwordInputRef = useRef<TextInput>(null); // referência do input de password
+
+  // Navegação
   const navigation = useNavigation();
 
-  const formRef = useRef<FormHandles>(null);
+  // Função dentro de função
   const handledSignIn = useCallback((data: object) => {
     console.log(data);
   }, []);
 
+  // Retorno da página
   return (
     <>
       <KeyboardAvoidingView
@@ -54,8 +61,30 @@ const SignIn: React.FC = () => {
             </View>
 
             <Form ref={formRef} onSubmit={handledSignIn}>
-              <Input name="email" icon="mail" placeholder="Email" />
-              <Input name="password" icon="lock" placeholder="Senha" />
+              <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail"
+                placeholder="Email"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
+
+              <Input
+                ref={passwordInputRef}
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
+              />
 
               <Button
                 onPress={() => {
