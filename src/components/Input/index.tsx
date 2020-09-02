@@ -1,4 +1,6 @@
 import React, {
+  useState,
+  useCallback,
   useEffect,
   useRef,
   useImperativeHandle,
@@ -31,13 +33,29 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   { name, icon, ...rest },
   ref
 ) => {
+  const { registerField, defaultValue = '', fieldName, error } = useField(name);
+
+  // Define as refs dos inputs
+  const inputValueRef = useRef<inputValueReference>({ value: defaultValue });
   const inputElementRef = useRef<any>(null);
 
-  const { registerField, defaultValue = '', fieldName, error } = useField(name);
-  const inputValueRef = useRef<inputValueReference>({ value: defaultValue });
+  // Determina os estados de Foco e Preenchimmento
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
 
-  // cria um método por dentro do componente filho
-  // pega a ref do password, e quando der focus, vai executar uma ação
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+
+    // se tiver algum valor no inputValueRef é true, se não tiver, é false
+    setIsFilled(!!inputValueRef.current.value);
+  }, []);
+
+  // pega a ref do input, e quando der focus, vai executar uma ação
+  // pega a ref do input, e quando der focus, vai executar uma ação
   useImperativeHandle(ref, () => ({
     focus() {
       inputElementRef.current.focus();
@@ -65,12 +83,19 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   // Retorno do component
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    <Container isFocused={isFocused}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#ff9000' : '#666360'}
+      />
+
       <TextInput
         ref={inputElementRef}
         placeholderTextColor="#666360"
         defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onChangeText={(value) => {
           inputValueRef.current.value = value;
         }}
