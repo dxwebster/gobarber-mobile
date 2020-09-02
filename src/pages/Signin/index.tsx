@@ -6,10 +6,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
@@ -28,6 +31,11 @@ import {
   CreateAccountButtonText,
 } from './styles';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   // Referências para acessar um objeto e manipulá-lo
   const formRef = useRef<FormHandles>(null); // referência do formulário
@@ -36,9 +44,42 @@ const SignIn: React.FC = () => {
   // Navegação
   const navigation = useNavigation();
 
-  // Função dentro de função
-  const handledSignIn = useCallback((data: object) => {
-    console.log(data);
+  // Função que dispara no submit
+  const handleSignIn = useCallback(async (data: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('Email obrigatório')
+          .email('Digite um email válido'),
+        password: Yup.string().required('Senha obrigatória'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      // await signIn({
+      //   email: data.email,
+      //   password: data.password,
+      // });
+
+      // history.push('/dashboard');
+    } catch (err) {
+      // se o erro for gerado pelo Yupi, retorna o erro
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+      // senão, vai disparar um alert do react-native
+      Alert.alert(
+        'Erro na autenticação',
+        'Ocorreu um  erro ao fazer login, cheque as credenciais'
+      );
+    }
   }, []);
 
   // Retorno da página
@@ -60,7 +101,7 @@ const SignIn: React.FC = () => {
               <Title>Faça seu logon</Title>
             </View>
 
-            <Form ref={formRef} onSubmit={handledSignIn}>
+            <Form ref={formRef} onSubmit={handleSignIn}>
               <Input
                 autoCorrect={false}
                 autoCapitalize="none"

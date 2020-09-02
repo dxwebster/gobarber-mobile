@@ -27,12 +27,13 @@
 - Icones: `yarn add react-native-vector-icons`
 - Lidar com Iphone: `yarn add react-native-iphone-x-helper`
 - Formulários: `yarn add @unform/core @unform/mobile`
+- Validação dos Forms: `yarn add yup`
 
 Dependências de desenvolvimento:
 
 - Tipos do Styled-Components: `yarn add @types/styled-components -D`
-
 - Tipos do Icons: `yarn add @types/react-native-vector-icons -D`
+- Tipos da Validação dos Forms: `yarn add @types/yup -D`
 
 ## Configuração de StatusBar
 
