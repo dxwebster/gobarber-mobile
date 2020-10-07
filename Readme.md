@@ -22,11 +22,11 @@ Esse é o mobile da GoBarber, uma aplicação que permite o agendamento de servi
 - Rodar app no Android Studio: `yarn android`
 
 ## 🛠 Como criar esse projeto do zero
-↳ Acesse a Wiki: https://github.com/dxwebster/GoBarber-Frontend/wiki
+Em breve...
 
 
 ## 📕 Licença
 
-Todos os arquivos incluídos aqui, incluindo este _Readme_, estão sob [Licença MIT](./LICENSE).<br>
+Todos os arquivos incluídos aqui, incluindo este _Readme_, estão sob Licença MIT<br>
 Criado com ❤ por [Adriana Lima](https://github.com/dxwebster)
 
