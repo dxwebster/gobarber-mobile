@@ -4,7 +4,7 @@ import { View, ActivityIndicator } from 'react-native';
 import AuthRoutes from './auth.routes';
 import AppRoutes from './app.routes';
 
-import { useAuth } from '../hooks/AuthContext';
+import { useAuth } from '../hooks/auth';
 
 const Routes: React.FC = () => {
   const { user, loading } = useAuth();
